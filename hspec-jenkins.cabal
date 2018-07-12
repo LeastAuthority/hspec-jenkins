@@ -1,4 +1,4 @@
-name: hspec-jenkins
+name: hspec-jenkins-lae
 version: 0.1.2
 synopsis: Jenkins-friendly XML formatter for Hspec
 description: Jenkins-friendly XML formatter for Hspec
