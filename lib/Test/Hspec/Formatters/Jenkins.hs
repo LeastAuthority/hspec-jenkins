@@ -21,9 +21,13 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 module Test.Hspec.Formatters.Jenkins (xmlFormatter) where
+
 import Data.List (intercalate)
 import Test.Hspec.Formatters
 import Test.Hspec.Runner (Path)
+import Test.Hspec.Formatters
+  ( getRealTime
+  )
 import Text.Blaze.Renderer.String (renderMarkup)
 import Text.Blaze.Internal
 
@@ -36,8 +40,15 @@ name = customAttribute "name" . stringValue
 className = customAttribute "classname" . stringValue
 message = customAttribute "message" . stringValue
 
+time :: Double -> Attribute
+time = customAttribute "time" . stringValue . show
+
 testcase :: Path -> Markup -> Markup
-testcase (xs,x) = customParent "testcase" ! name x ! className (intercalate "." xs)
+testcase (xs,x) =
+  customParent "testcase"
+  ! name x
+  ! className (intercalate "." xs)
+  ! time getRealTime
 
 reasonAsString :: FailureReason -> String
 reasonAsString reason =
